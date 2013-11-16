@@ -10,8 +10,9 @@ vimradish is a vim plugin that allows yo to run radish directly
 within the vim python interpreter.
 
 Features:
-    * run radish within your vim python interpreter
-    * signal highlighting of passed/failed tests
+
+    + run radish within your vim python interpreter
+    + signal highlighting of passed/failed tests
 
 ## Requirements
 
@@ -25,8 +26,9 @@ Features:
 
 1. Get vimradish
 
-    git clone http://www.github.com/realtimeprojects/vimradish ~/vimradish
-
+```bash
+git clone http://www.github.com/realtimeprojects/vimradish ~/vimradish
+```
 
 2. Install vimradish:
 
@@ -37,7 +39,9 @@ python setup.py install
 
 3. Place the following statement somewhere in your ~/.vimrc
 
-    :py import vimradish
+```vim
+:py import vimradish
+```
 
 ## Usage
 
