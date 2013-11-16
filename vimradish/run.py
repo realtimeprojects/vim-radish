@@ -11,13 +11,12 @@ from radish.hookregistry import after, before
 
 @before.each_step
 def radish_print_before_step(step):
-    print ("before: %d" % step.get_line_no())
     cmd = ":sign place %d line=%d name=radish_busy file=%s" % (step.get_line_no(), step.get_line_no(), Config().feature_files[0])
     vim.command(cmd)
+    vim.command(":redraw")
 
 @after.each_step
 def radish_print_after_step(step):
-    print ("after: %d" % step.get_line_no())
     if step.has_passed() == None:
         passed = "skipped"
     else:
@@ -28,6 +27,7 @@ def radish_print_after_step(step):
 
     cmd = ":sign place %d line=%d name=radish_%s file=%s" % (step.get_line_no(), step.get_line_no(), passed, Config().feature_files[0])
     vim.command(cmd)
+    vim.command(":redraw")
 
 def _radish(featurefile, basedir=None):
     if basedir == None:
