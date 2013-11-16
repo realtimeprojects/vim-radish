@@ -52,7 +52,7 @@ def _radish(featurefile, basedir=None):
     runner = radish.Runner(fp.get_features())
     endResult = runner.run()
 
-def main(basedir=None):
+def run(basedir=None):
     try:
         _radish(current.buffer.name, basedir=basedir)
     except:
@@ -64,5 +64,5 @@ vim.command(":highlight! RadishFailed ctermfg=red")
 vim.command(":sign define radish_passed linehl=RadishPassed")
 vim.command(":sign define radish_failed linehl=RadishFailed")
 vim.command(":sign define radish_busy linehl=Search")
-vim.command(":com! Rrun :py vimradish.main()")
+vim.command(":com! -nargs=* Rrun :py vimradish.run(<args>)")
 
