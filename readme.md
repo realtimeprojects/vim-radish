@@ -11,8 +11,8 @@ within the vim python interpreter.
 
 Features:
 
-    + run radish within your vim python interpreter
-    + signal highlighting of passed/failed tests
++ run radish within your vim python interpreter
++ signal highlighting of passed/failed tests
 
 ## Requirements
 
