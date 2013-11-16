@@ -47,10 +47,14 @@ python setup.py install
 
 1. Open a feature file from the test directory (radish base directory)
 
+```bash
     vim features/001.feature
+```
 
 2. Run radish
 
+```vim
     :Rr
+```
 
 3. Enjoy :-)
