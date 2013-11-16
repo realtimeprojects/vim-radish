@@ -13,6 +13,8 @@ from radish.hookregistry import after, before
 def radish_print_before_step(step):
     cmd = ":sign place %d line=%d name=radish_busy file=%s" % (step.get_line_no(), step.get_line_no(), Config().feature_files[0])
     vim.command(cmd)
+    cw = vim.current.window
+    cw.cursor = (int(step.get_line_no()), 0)
     vim.command(":redraw")
 
 @after.each_step
