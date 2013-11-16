@@ -30,8 +30,10 @@ Features:
 
 2. Install vimradish:
 
-    cd ~/vimradish
-    python setup.py install
+```bash
+cd ~/vimradish
+python setup.py install
+```
 
 3. Place the following statement somewhere in your ~/.vimrc
 
