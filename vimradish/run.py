@@ -9,9 +9,23 @@ from radish import main, radish
 from radish.config import Config
 from radish.hookregistry import after, before
 
+@before.each_step
+def radish_print_before_step(step):
+    print ("before: %d" % step.get_line_no())
+    cmd = ":sign place %d line=%d name=radish_busy file=%s" % (step.get_line_no(), step.get_line_no(), Config().feature_files[0])
+    vim.command(cmd)
+
 @after.each_step
 def radish_print_after_step(step):
-    passed = "passed" if step.has_passed() else "failed"
+    print ("after: %d" % step.get_line_no())
+    if step.has_passed() == None:
+        passed = "skipped"
+    else:
+        if step.has_passed() == True:
+            passed = "passed"
+        else:
+            passed = "failed"
+
     cmd = ":sign place %d line=%d name=radish_%s file=%s" % (step.get_line_no(), step.get_line_no(), passed, Config().feature_files[0])
     vim.command(cmd)
 
@@ -36,16 +50,19 @@ def _radish(featurefile, basedir=None):
     runner = radish.Runner(fp.get_features())
     endResult = runner.run()
 
-def main():
+def main(basedir=None):
     try:
-        vim.command(":highlight! RadishPassed ctermbg=green")
-        vim.command(":highlight! RadishFailed ctermbg=red")
-        vim.command(":sign define radish_passed linehl=RadishPassed")
-        vim.command(":sign define radish_failed linehl=RadishFailed")
-        print("current:%s" % dir(current.buffer))
-        print("name:%s" % current.buffer.name)
-        _radish(current.buffer.name)
+        for i in range(0, 20):
+            print("Hello World")
+
+        _radish(current.buffer.name, basedir=basedir)
     except:
         print "Unexpected error:", sys.exc_info()[0]
         traceback.print_exc()
+
+vim.command(":highlight! RadishPassed ctermfg=green")
+vim.command(":highlight! RadishFailed ctermfg=red")
+vim.command(":sign define radish_passed linehl=RadishPassed")
+vim.command(":sign define radish_failed linehl=RadishFailed")
+vim.command(":sign define radish_busy linehl=Search")
 
