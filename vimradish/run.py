@@ -52,9 +52,6 @@ def _radish(featurefile, basedir=None):
 
 def main(basedir=None):
     try:
-        for i in range(0, 20):
-            print("Hello World")
-
         _radish(current.buffer.name, basedir=basedir)
     except:
         print "Unexpected error:", sys.exc_info()[0]
