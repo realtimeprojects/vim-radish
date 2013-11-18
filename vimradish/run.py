@@ -64,5 +64,5 @@ vim.command(":highlight! RadishFailed ctermfg=red")
 vim.command(":sign define radish_passed linehl=RadishPassed")
 vim.command(":sign define radish_failed linehl=RadishFailed")
 vim.command(":sign define radish_busy linehl=Search")
-vim.command(":com! -nargs=* Rrun :py vimradish.run(<args>)")
+vim.command("au BufNewFile,BufRead *.feature :com! -b -nargs=* Rrun :py vimradish.run(<args>)")
 
