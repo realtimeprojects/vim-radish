@@ -2,6 +2,8 @@ import os
 import traceback
 import sys
 import time
+import StringIO
+import tempfile
 
 import vim
 from vim import current, buffers
@@ -38,7 +40,7 @@ def _radish(featurefile, basedir=None):
     Config().feature_files = [ featurefile ]
     Config().vim_mode = True
     Config().no_colors = True
-    Config().dry_run = True
+    Config().dry_run = False
     Config().with_traceback = True
     Config().marker = time.time()
 
@@ -63,12 +65,16 @@ def run(basedir=None):
         @param basedir The radish base directory (will
                         be passed as -b to radish
     """
+    tmpfile = tempfile.NamedTemporaryFile(prefix="radish_run_", suffix="log", delete=False)
     try:
+        sys.stdout = tmpfile
         clear()
         _radish(current.buffer.name, basedir=basedir)
+        vim.command(":e %s" % tmpfile.name)
     except:
         print "Unexpected error:", sys.exc_info()[0]
         traceback.print_exc()
+        vim.command(":e %s" % tmpfile.name)
 
 vim.command(":highlight! RadishPassed ctermfg=green")
 vim.command(":highlight! RadishFailed ctermfg=red")
