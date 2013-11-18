@@ -52,7 +52,17 @@ def _radish(featurefile, basedir=None):
     runner = radish.Runner(fp.get_features())
     endResult = runner.run()
 
+def clear():
+    """ clean radish highlights in current buffer
+    """
+    vim.command(":sign unplace *");
+
 def run(basedir=None):
+    """ run radish with current buffer as feature file
+
+        @param basedir The radish base directory (will
+                        be passed as -b to radish
+    """
     try:
         _radish(current.buffer.name, basedir=basedir)
     except:
@@ -65,4 +75,5 @@ vim.command(":sign define radish_passed linehl=RadishPassed")
 vim.command(":sign define radish_failed linehl=RadishFailed")
 vim.command(":sign define radish_busy linehl=Search")
 vim.command("au BufNewFile,BufRead *.feature :com! -b -nargs=* Rrun :py vimradish.run(<args>)")
+vim.command("au BufNewFile,BufRead *.feature :com! -b -nargs=* Rclear :py vimradish.clear()")
 
