@@ -6,7 +6,7 @@ a vim plugin for running radish
 
 ## About
 
-vimradish is a vim plugin that allows yo to run radish directly
+vimradish is a vim plugin that allows you to run radish directly
 within the vim python interpreter.
 
 Features:
@@ -16,45 +16,47 @@ Features:
 
 ## Requirements
 
-1. Radish insalled
+1. radish installed
 2. vim compiled with python support (2.7)
 3. python installed with setuptools
 
 ## Installation
 
-0. Ensure radish is installed in your python environment
+1. Ensure radish is installed in your python environment
+    
+    See [radish: Installation Manual](https://github.com/timofurrer/radish/wiki/Installation)
 
-1. Get vimradish
+2. Get vimradish
 
-```bash
-git clone http://www.github.com/realtimeprojects/vimradish ~/vimradish
-```
+    ```bash
+    git clone http://www.github.com/realtimeprojects/vimradish ~/vimradish
+    ```
 
-2. Install vimradish:
+3. Install vimradish:
 
-```bash
-cd ~/vimradish
-python setup.py install
-```
+    ```bash
+    cd ~/vimradish
+    python setup.py install
+    ```
 
-3. Place the following statement somewhere in your ~/.vimrc
+4. Place the following statement somewhere in your ~/.vimrc
 
-```vim
-:py import vimradish
-```
+    ```vim
+    py import vimradish
+    ```
 
 ## Usage
 
 1. Open a feature file from the test directory (radish base directory)
 
-```bash
+    ```bash
     vim features/001.feature
-```
+    ```
 
 2. Run radish
-
-```vim
+    
+    ```vim
     :Rr
-```
+    ```
 
 3. Enjoy :-)
