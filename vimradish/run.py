@@ -64,6 +64,7 @@ def run(basedir=None):
                         be passed as -b to radish
     """
     try:
+        clear()
         _radish(current.buffer.name, basedir=basedir)
     except:
         print "Unexpected error:", sys.exc_info()[0]
