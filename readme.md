@@ -23,7 +23,7 @@ Features:
 ## Installation
 
 1. Ensure radish is installed in your python environment
-    
+
     See [radish: Installation Manual](https://github.com/timofurrer/radish/wiki/Installation)
 
 2. Get vimradish
@@ -54,7 +54,7 @@ Features:
     ```
 
 2. Run radish
-    
+
     ```vim
     :Rr
     ```
