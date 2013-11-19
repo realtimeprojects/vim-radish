@@ -62,6 +62,9 @@ def _radish(featurefile, basedir=None):
     runner = radish.Runner(fp.get_features())
     endResult = runner.run()
 
+def openlog():
+    vim.command(":e %s" % Config().log_file.name)
+
 def clear():
     """ clean radish highlights in current buffer
     """
@@ -73,16 +76,14 @@ def run(basedir=None):
         @param basedir The radish base directory (will
                         be passed as -b to radish
     """
-    tmpfile = tempfile.NamedTemporaryFile(prefix="radish_run_", suffix="log", delete=False)
+    Config().log_file = tempfile.NamedTemporaryFile(prefix="radish_run_", suffix="log", delete=False)
     try:
-        sys.stdout = tmpfile
+        sys.stdout = Config().log_file
         clear()
         _radish(current.buffer.name, basedir=basedir)
-        vim.command(":e %s" % tmpfile.name)
     except:
         print "Unexpected error:", sys.exc_info()[0]
         traceback.print_exc()
-        vim.command(":e %s" % tmpfile.name)
 
 vim.command(":highlight! RadishPassed ctermfg=green")
 vim.command(":highlight! RadishFailed ctermbg=red ctermfg=white")
@@ -93,4 +94,5 @@ vim.command(":sign define radish_skipped linehl=RadishSkipped")
 vim.command(":sign define radish_busy linehl=Search")
 vim.command("au BufNewFile,BufRead *.feature :com! -b -nargs=* Rrun :py vimradish.run(<args>)")
 vim.command("au BufNewFile,BufRead *.feature :com! -b -nargs=* Rclear :py vimradish.clear()")
+vim.command("au BufNewFile,BufRead *.feature :com! -b -nargs=* Rlog :py vimradish.openlog()")
 
