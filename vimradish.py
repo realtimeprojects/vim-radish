@@ -79,9 +79,11 @@ def run(basedir=None):
     Config().log_file = tempfile.NamedTemporaryFile(prefix="radish_run_", suffix="log", delete=False)
     try:
         sys.stdout = Config().log_file
+#        sys.stderr = Config().log_file
         clear()
         _radish(current.buffer.name, basedir=basedir)
-    except:
-        print "Unexpected error:", sys.exc_info()[0]
-        traceback.print_exc()
+    except radish.exceptions.RadishError as e:
+        e.show()
+        vim.command(":echo \"%s\"" % e)
+    Config().log_file.close()
 
