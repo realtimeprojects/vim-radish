@@ -85,5 +85,6 @@ def run(basedir=None):
     except radish.exceptions.RadishError as e:
         e.show()
         vim.command(":echo \"%s\"" % e)
+
     Config().log_file.close()
 
