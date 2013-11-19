@@ -79,7 +79,7 @@ def run(basedir=None):
     Config().log_file = tempfile.NamedTemporaryFile(prefix="radish_run_", suffix="log", delete=False)
     try:
         sys.stdout = Config().log_file
-#        sys.stderr = Config().log_file
+        sys.stderr = Config().log_file
         clear()
         _radish(current.buffer.name, basedir=basedir)
     except radish.exceptions.RadishError as e:
