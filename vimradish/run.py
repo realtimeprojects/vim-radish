@@ -43,6 +43,14 @@ def _radish(featurefile, basedir=None):
     Config().dry_run = False
     Config().with_traceback = True
     Config().marker = time.time()
+    Config().no_indentation = False
+    Config().no_numbers = False
+    Config().no_duration = False
+    Config().with_section_names = True
+    Config().no_line_jump = True
+    Config().no_overwrite = True
+    Config().abort_fail = True
+    Config().no_skipped_steps = True
 
     fp = radish.FeatureParser()
     fp.parse()
@@ -77,9 +85,11 @@ def run(basedir=None):
         vim.command(":e %s" % tmpfile.name)
 
 vim.command(":highlight! RadishPassed ctermfg=green")
-vim.command(":highlight! RadishFailed ctermfg=red")
+vim.command(":highlight! RadishFailed ctermbg=red ctermfg=white")
+vim.command(":highlight! RadishSkipped ctermbg=grey ctermfg=black")
 vim.command(":sign define radish_passed linehl=RadishPassed")
 vim.command(":sign define radish_failed linehl=RadishFailed")
+vim.command(":sign define radish_skipped linehl=RadishSkipped")
 vim.command(":sign define radish_busy linehl=Search")
 vim.command("au BufNewFile,BufRead *.feature :com! -b -nargs=* Rrun :py vimradish.run(<args>)")
 vim.command("au BufNewFile,BufRead *.feature :com! -b -nargs=* Rclear :py vimradish.clear()")
