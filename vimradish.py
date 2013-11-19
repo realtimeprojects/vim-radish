@@ -85,14 +85,3 @@ def run(basedir=None):
         print "Unexpected error:", sys.exc_info()[0]
         traceback.print_exc()
 
-vim.command(":highlight! RadishPassed ctermfg=green")
-vim.command(":highlight! RadishFailed ctermbg=red ctermfg=white")
-vim.command(":highlight! RadishSkipped ctermbg=grey ctermfg=black")
-vim.command(":sign define radish_passed linehl=RadishPassed")
-vim.command(":sign define radish_failed linehl=RadishFailed")
-vim.command(":sign define radish_skipped linehl=RadishSkipped")
-vim.command(":sign define radish_busy linehl=Search")
-vim.command("au BufNewFile,BufRead *.feature :com! -b -nargs=* Rrun :py vimradish.run(<args>)")
-vim.command("au BufNewFile,BufRead *.feature :com! -b -nargs=* Rclear :py vimradish.clear()")
-vim.command("au BufNewFile,BufRead *.feature :com! -b -nargs=* Rlog :py vimradish.openlog()")
-
