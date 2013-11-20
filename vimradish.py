@@ -28,6 +28,7 @@ def radish_print_after_step(step):
             passed = "passed"
         else:
             passed = "failed"
+            vim.command(":echoerr \"radish step failed: %s\"" % str(step._fail_reason.get_reason()))
 
     cmd = ":sign place %d line=%d name=radish_%s file=%s" % (step.get_line_no(), step.get_line_no(), passed, Config().feature_files[0])
     vim.command(cmd)
@@ -65,6 +66,9 @@ def _radish(featurefile, basedir=None):
     runner = radish.Runner(fp.get_features())
     endResult = runner.run()
 
+    if endResult.have_all_passed():
+      vim.command(":echo \"radish run was successful ;-)\"")
+
 def openlog():
     global log_file
     if log_file:
@@ -85,11 +89,17 @@ def run(basedir=None):
     log_file = tempfile.NamedTemporaryFile(prefix="radish_run_", suffix="log", delete=False)
     try:
         sys.stdout = log_file
-        sys.stderr = log_file
         clear()
         _radish(current.buffer.name, basedir=basedir)
     except Exception as e:
-        vim.command(":echo \"%s\"" % str(e))
+        vim.command(":echoerr \"radish: %s\"" % str(e))
+        if hasattr(e, "fileline"):
+            filename, line_no = e.fileline()
+            cmd = ":sign place %d line=%d name=radish_failed file=%s" % (line_no, line_no, filename)
+            vim.command(cmd)
+            cw = vim.current.window
+            cw.cursor = (line_no, 0)
+            vim.command(":redraw")
 
     log_file.close()
 
