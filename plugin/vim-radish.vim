@@ -23,8 +23,12 @@ function! s:initVimRadish()
   " Only parse the python library once
   if !exists('s:vimradish_loaded')
     python import sys
-
     exe 'python sys.path = ["' . s:plugin_path . '/.."] + sys.path'
+
+    if exists('s:radish_basepath')
+      exe 'python sys.path = ["' . s:radish_basepath . '"] + sys.path'
+    endif
+
     python import vimradish
 
     let s:vimradish_loaded = 1
