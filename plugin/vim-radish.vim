@@ -1,15 +1,15 @@
 
-:highlight! RadishPassed ctermfg=green
-:highlight! RadishFailed ctermbg=red ctermfg=white
-:highlight! RadishSkipped ctermbg=grey ctermfg=black
-:sign define radish_passed linehl=RadishPassed
+:highlight! RadishBusy ctermbg=darkblue
+:highlight! RadishPassed ctermbg=darkgreen
+:highlight! RadishFailed ctermbg=darkred
+:highlight! RadishSkipped ctermbg=darkgrey
+:sign define radish_passed linehl=Normal
 :sign define radish_failed linehl=RadishFailed
 :sign define radish_skipped linehl=RadishSkipped
-:sign define radish_busy linehl=Search
+:sign define radish_busy linehl=RadishBusy
 au BufNewFile,BufRead *.feature :com! -b -nargs=* Rrun :py vimradish.run(<args>)
 au BufNewFile,BufRead *.feature :com! -b -nargs=* Rclear :py vimradish.clear()
 au BufNewFile,BufRead *.feature :com! -b -nargs=* Rlog :py vimradish.openlog()
-
 
 let s:plugin_path = escape(expand('<sfile>:p:h'), '\')
 
