@@ -33,6 +33,8 @@ def radish_print_after_step(step):
     vim.command(cmd)
     vim.command(":redraw")
 
+log_file = None
+
 def _radish(featurefile, basedir=None):
     if basedir == None:
         basedir = os.getcwd()
@@ -64,7 +66,9 @@ def _radish(featurefile, basedir=None):
     endResult = runner.run()
 
 def openlog():
-    vim.command(":e %s" % Config().log_file.name)
+    global log_file
+    if log_file:
+        vim.command(":e %s" % log_file.name)
 
 def clear():
     """ clean radish highlights in current buffer
@@ -77,15 +81,15 @@ def run(basedir=None):
         @param basedir The radish base directory (will
                         be passed as -b to radish
     """
-    Config().log_file = tempfile.NamedTemporaryFile(prefix="radish_run_", suffix="log", delete=False)
+    global log_file
+    log_file = tempfile.NamedTemporaryFile(prefix="radish_run_", suffix="log", delete=False)
     try:
-        sys.stdout = Config().log_file
-        sys.stderr = Config().log_file
+        sys.stdout = log_file
+        sys.stderr = log_file
         clear()
         _radish(current.buffer.name, basedir=basedir)
-    except radish.exceptions.RadishError as e:
-        e.show()
-        vim.command(":echo \"%s\"" % e)
+    except Exception as e:
+        vim.command(":echo \"%s\"" % str(e))
 
-    Config().log_file.close()
+    log_file.close()
 
