@@ -51,6 +51,7 @@ def _radish(featurefile, basedir=None):
     Config().no_overwrite = True
     Config().abort_fail = True
     Config().no_skipped_steps = True
+    Config().profile = ""
 
     fp = radish.FeatureParser()
     fp.parse()
