@@ -31,9 +31,15 @@ def radish_print_after_step(step):
             passed = "passed"
         else:
             passed = "failed"
-            vim.command(":echo \"radish step failed: %s\"" % step._fail_reason.get_reason())
+            try:
+                vim.command(":echoerr \"radish step failed: %s\"" %
+                            str(step._fail_reason.get_reason()))
+            except vim.error:
+                sys.stderr.write("radish step failed: %s" %
+                                 str(step._fail_reason.get_reason()))
 
-    cmd = ":sign place %d line=%d name=radish_%s file=%s" % (step.get_line_no(), step.get_line_no(), passed, Config().feature_files[0])
+    cmd = ":sign place %d line=%d name=radish_%s file=%s" % (
+        step.get_line_no(), step.get_line_no(), passed, Config().feature_files[0])
     vim.command(cmd)
     vim.command(":redraw")
 
@@ -100,7 +106,10 @@ def run(basedir=None):
         clear()
         _radish(current.buffer.name, basedir=basedir)
     except radish.exceptions.RadishError as e:
-        vim.command(":echo \"radish: %s\"" % e)
+        try:
+          vim.command(":echoerr \"radish: %s\"" % str(e))
+        except vim.error:
+          sys.stderr.write("radish: %s" % str(e))
         if hasattr(e, "fileline"):
             filename, line_no = e.fileline()
             cmd = ":sign place %d line=%d name=radish_failed file=%s" % (
