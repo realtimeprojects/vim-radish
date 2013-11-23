@@ -11,13 +11,16 @@ from radish import main, radish
 from radish.config import Config
 from radish.hookregistry import after, before
 
+
 @before.each_step
 def radish_print_before_step(step):
-    cmd = ":sign place %d line=%d name=radish_busy file=%s" % (step.get_line_no(), step.get_line_no(), Config().feature_files[0])
+    cmd = ":sign place %d line=%d name=radish_busy file=%s" % (
+        step.get_line_no(), step.get_line_no(), Config().feature_files[0])
     vim.command(cmd)
     cw = vim.current.window
     cw.cursor = (step.get_line_no(), 0)
     vim.command(":redraw")
+
 
 @after.each_step
 def radish_print_after_step(step):
@@ -36,11 +39,12 @@ def radish_print_after_step(step):
 
 log_file = None
 
+
 def _radish(featurefile, basedir=None):
     if basedir == None:
         basedir = os.getcwd()
     Config().basedir = basedir
-    Config().feature_files = [ featurefile ]
+    Config().feature_files = [featurefile]
     Config().vim_mode = True
     Config().no_colors = True
     Config().dry_run = False
@@ -67,17 +71,20 @@ def _radish(featurefile, basedir=None):
     endResult = runner.run()
 
     if endResult.have_all_passed():
-      vim.command(":echo \"radish run was successful ;-)\"")
+        vim.command(":echo \"radish run was successful ;-)\"")
+
 
 def openlog():
     global log_file
     if log_file:
         vim.command(":e %s" % log_file.name)
 
+
 def clear():
     """ clean radish highlights in current buffer
     """
-    vim.command(":sign unplace *");
+    vim.command(":sign unplace *")
+
 
 def run(basedir=None):
     """ run radish with current buffer as feature file
@@ -86,7 +93,8 @@ def run(basedir=None):
                         be passed as -b to radish
     """
     global log_file
-    log_file = tempfile.NamedTemporaryFile(prefix="radish_run_", suffix="log", delete=False)
+    log_file = tempfile.NamedTemporaryFile(
+        prefix="radish_run_", suffix="log", delete=False)
     try:
         sys.stdout = log_file
         clear()
@@ -95,11 +103,11 @@ def run(basedir=None):
         vim.command(":echo \"radish: %s\"" % e)
         if hasattr(e, "fileline"):
             filename, line_no = e.fileline()
-            cmd = ":sign place %d line=%d name=radish_failed file=%s" % (line_no, line_no, filename)
+            cmd = ":sign place %d line=%d name=radish_failed file=%s" % (
+                line_no, line_no, filename)
             vim.command(cmd)
             cw = vim.current.window
             cw.cursor = (line_no, 0)
             vim.command(":redraw")
 
     log_file.close()
-
