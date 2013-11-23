@@ -60,3 +60,16 @@ Features:
     ```
 
 3. Enjoy :-)
+
+# Highlighting
+
+You can overwrite the default highlight colors for vim-radish by placing
+those commands into your .vimrc:
+
+    ```vim
+    highlight RadishBusy    ctermfg=yellow
+    highlight RadishPassed  ctermbg=green
+    highlight RadishFailed  ctermfg=darkred
+    highlight RadishSkipped ctermfg=darkgrey
+    ```
+

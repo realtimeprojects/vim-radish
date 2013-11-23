@@ -1,12 +1,13 @@
+highlight default link RadishBusy Todo
+highlight default RadishPassed  ctermfg=darkgreen
+highlight default RadishFailed  ctermbg=darkred
+highlight default RadishSkipped ctermfg=darkgrey
 
-:highlight! RadishBusy ctermbg=darkblue
-:highlight! RadishPassed ctermbg=darkgreen
-:highlight! RadishFailed ctermbg=darkred
-:highlight! RadishSkipped ctermbg=darkgrey
-:sign define radish_passed linehl=Normal
-:sign define radish_failed linehl=RadishFailed
-:sign define radish_skipped linehl=RadishSkipped
-:sign define radish_busy linehl=RadishBusy
+sign define radish_passed  linehl=RadishPassed
+sign define radish_failed  linehl=RadishFailed
+sign define radish_skipped linehl=RadishSkipped
+sign define radish_busy    linehl=RadishBusy
+
 au BufNewFile,BufRead *.feature :com! -b -nargs=* Rrun :py vimradish.run(<args>)
 au BufNewFile,BufRead *.feature :com! -b -nargs=* Rclear :py vimradish.clear()
 au BufNewFile,BufRead *.feature :com! -b -nargs=* Rlog :py vimradish.openlog()
