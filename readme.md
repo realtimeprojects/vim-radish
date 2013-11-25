@@ -1,4 +1,4 @@
-# vimradish
+# vim-radish
 a vim plugin for running radish
 
 **Author:** Claudio Klingler <ck@realtime-projects.com><br />
